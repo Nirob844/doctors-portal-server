@@ -17,6 +17,7 @@ const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 const bookingsCollection = client.db('doctorsPortal').collection('bookings');
+const usersCollection = client.db('doctorsPortal').collection('users');
 
 
 async function run() {
@@ -66,6 +67,12 @@ async function run() {
             }
             const result = await bookingsCollection.insertOne(booking)
             res.send(result)
+        });
+
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            const result = await usersCollection.insertOne(user);
+            res.send(result);
         })
 
 
